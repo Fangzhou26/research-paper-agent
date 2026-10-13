@@ -42,6 +42,13 @@ Both modes use isolated workspaces and the production plan, executor,
 dispatcher, research tools, checkpoint, citation, and output components. Only
 Demo scripts model decisions; Live model uses the configured provider.
 
+### Demo screenshot
+
+The offline demo uses a fictional sample corpus to show the validated task plan,
+checkpoint recovery, citation gate, and provenance-linked output.
+
+![Research Paper Agent offline demo showing completed tasks, citation audit, and output provenance](assets/research-paper-agent-demo.jpg)
+
 ## System Path
 
 ```text
