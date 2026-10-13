@@ -1,0 +1,9 @@
+{
+  "title": "Research Agent Synthetic Demo",
+  "research_question": "How can a research assistant connect a short claim to a source passage and audit its citation?",
+  "description": "A fully fictional, compact project fixture used by the offline demo and automated tests.",
+  "uploaded_papers": [],
+  "seed_papers": ["Synthetic Sample Study (fictional)"],
+  "research_scope": ["Page-level retrieval", "Structured evidence", "Citation-key validation"],
+  "output_directory": "projects/demo/outputs"
+}

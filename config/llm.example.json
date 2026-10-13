@@ -1,0 +1,8 @@
+{
+  "provider": "openai_compatible",
+  "model": "your-model-name",
+  "base_url": null,
+  "api_key_env": "OPENAI_API_KEY",
+  "temperature": 0.1,
+  "max_repair_attempts": 2
+}

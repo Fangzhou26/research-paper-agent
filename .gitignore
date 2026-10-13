@@ -1,0 +1,24 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.runtime/
+
+# Local credentials and provider-specific settings
+.env
+.env.*
+!.env.example
+/config/llm.json
+
+# Local research workspace: do not publish papers, extracted text,
+# conversation transcripts, manuscript drafts, or generated run state.
+/projects/humanoid-tracking/
+
+# Internal planning notes and topic-specific agent customizations
+/.agents/
+/INTERVIEW_AGENT_PLAN.md
+/REFACTOR_PLAN.md
+/RESEARCH_WRITING_IMPROVEMENT_PLAN.md
+/wiki/
+/tests/fixtures/humanoid-tracking/

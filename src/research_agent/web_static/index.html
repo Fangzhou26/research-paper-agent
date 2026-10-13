@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research Agent</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-block">
+      <span class="brand-mark" aria-hidden="true">RA</span>
+      <div>
+        <strong>Research Agent</strong>
+        <span>Evidence workspace</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="connectionState" class="connection-state"><i></i> Local service</span>
+      <a class="docs-link" href="/api/docs" target="_blank" rel="noreferrer">API</a>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-section project-section">
+        <label for="projectSelect">Project</label>
+        <select id="projectSelect" aria-label="Research project"></select>
+        <h1 id="projectTitle">Loading project</h1>
+        <p id="researchQuestion" class="research-question"></p>
+      </div>
+
+      <div class="stats" aria-label="Project statistics">
+        <div><strong id="paperCount">0</strong><span>Papers</span></div>
+        <div><strong id="noteCount">0</strong><span>Notes</span></div>
+        <div><strong id="evidenceCount">0</strong><span>Evidence</span></div>
+      </div>
+
+      <div class="sidebar-section corpus-section">
+        <div class="section-label">
+          <span>Corpus</span>
+          <span id="corpusCoverage">0 / 0</span>
+        </div>
+        <div id="paperList" class="paper-list"></div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <section class="run-header">
+        <div>
+          <div class="eyebrow">Agent run</div>
+          <h2 id="runTitle">Evidence-grounded synthesis</h2>
+          <p id="runSubtitle">Ready to execute an isolated research workflow.</p>
+        </div>
+        <button id="runButton" class="primary-button" type="button">Run demo</button>
+      </section>
+
+      <section class="run-setup" aria-label="Run configuration">
+        <div class="mode-field">
+          <span class="field-label">Mode</span>
+          <div class="segmented-control">
+            <label><input type="radio" name="runMode" value="demo" checked><span>Demo</span></label>
+            <label><input type="radio" name="runMode" value="live"><span>Live model</span></label>
+          </div>
+        </div>
+        <label id="seedModeControl" class="seed-mode-toggle">
+          <input id="seedModeToggle" type="checkbox" checked>
+          <span>Seed discovery</span>
+        </label>
+        <label class="objective-field" for="objectiveInput">
+          <span class="field-label">Research objective</span>
+          <textarea id="objectiveInput" rows="2" maxlength="2000"></textarea>
+        </label>
+        <label id="faultControl" class="fault-toggle">
+          <input id="faultToggle" type="checkbox" checked>
+          <span>Inject provider failure</span>
+        </label>
+      </section>
+
+      <section id="seedSetup" class="seed-setup" hidden>
+        <label for="topicInput">
+          <span class="field-label">Topic</span>
+          <input id="topicInput" type="text" maxlength="500">
+        </label>
+        <label for="innovationInput">
+          <span class="field-label">Innovation points</span>
+          <textarea id="innovationInput" rows="4" maxlength="3000"></textarea>
+        </label>
+        <label for="seedFiles">
+          <span class="field-label">Seed papers (1-3 PDFs)</span>
+          <input id="seedFiles" type="file" accept="application/pdf,.pdf" multiple>
+          <span id="seedFileState" class="file-state">No PDFs selected</span>
+        </label>
+        <label class="paper-limit" for="paperLimit">
+          <span class="field-label">Corpus limit</span>
+          <input id="paperLimit" type="number" min="3" max="20" value="12">
+        </label>
+      </section>
+
+      <section class="status-strip" aria-live="polite">
+        <div>
+          <span class="label">Status</span>
+          <span id="runStatus" class="status-badge idle">Idle</span>
+        </div>
+        <div>
+          <span class="label">Run ID</span>
+          <code id="runId">Not started</code>
+        </div>
+        <div>
+          <span class="label">Events</span>
+          <strong id="eventCount">0</strong>
+        </div>
+        <div>
+          <span class="label">Citation gate</span>
+          <strong id="citationState">Pending</strong>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <div class="execution-column">
+          <section class="panel plan-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">Validated plan</span>
+                <h3>Execution graph</h3>
+              </div>
+              <span id="planState" class="quiet-label">Waiting</span>
+            </div>
+            <div id="planTasks" class="plan-tasks empty-state">No active plan</div>
+          </section>
+
+          <section class="panel timeline-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">Live trace</span>
+                <h3>Run timeline</h3>
+              </div>
+              <button id="clearTrace" class="text-button" type="button">Clear</button>
+            </div>
+            <div id="timeline" class="timeline empty-state">Events will appear here</div>
+          </section>
+        </div>
+
+        <div class="inspection-column">
+          <section class="panel guard-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">Safety gate</span>
+                <h3>Citation audit</h3>
+              </div>
+            </div>
+            <div id="citationGuard" class="guard-content pending">
+              <strong>Awaiting artifact</strong>
+              <p>No citation checks have run.</p>
+            </div>
+          </section>
+
+          <section class="panel artifact-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">Final output</span>
+                <h3>Artifact</h3>
+              </div>
+              <button id="copyArtifact" class="text-button" type="button" disabled>Copy</button>
+            </div>
+            <pre id="artifactContent" class="artifact-content empty-state">The synthesis will appear here</pre>
+            <div id="provenance" class="provenance" hidden>
+              <div><span>Artifact</span><code id="artifactId"></code></div>
+              <div><span>Paper</span><code id="artifactPaper"></code></div>
+              <div><span>Evidence</span><code id="artifactEvidence"></code></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
